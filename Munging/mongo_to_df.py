@@ -36,7 +36,7 @@ if __name__ == '__main__':
     for entry in beer_co_clean.find():
         mydata.append(flatten(entry))
 
-    ## Feature selections?
+    # Feature selections?
     df = pd.DataFrame(mydata)
 
     #############

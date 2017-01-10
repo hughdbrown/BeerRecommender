@@ -20,9 +20,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Custom column selection:
-COLUMNS = ['abv', 'description', 'isOrganic', 'name', 'nameDisplay',\
-           'style_abvMax', 'style_abvMin', 'style_category_name', \
-           'style_description', 'style_fgMax', 'style_fgMin', \
+COLUMNS = ['abv', 'description', 'isOrganic', 'name', 'nameDisplay',
+           'style_abvMax', 'style_abvMin', 'style_category_name',
+           'style_description', 'style_fgMax', 'style_fgMin',
            'style_ibuMax', 'style_ibuMin', 'style_name', 'style_ogMin',
            'style_shortName', 'style_srmMax', 'style_srmMin', 'id']
 
@@ -114,6 +114,7 @@ def flatten(d, parent_key='', sep='_'):
 
     return dict(items)
 
+
 def convert_columns(df):
     ''' Take care of columns like: NaN(float) ... RwZ9MZ(unicode) ...
         Store as graphlab compatible: None(NoneType) ... 'RwZ9MZ'(string) ...
@@ -122,8 +123,8 @@ def convert_columns(df):
     '''
     for col in df:
         if df[col].dtype == np.object:
-            df[col] = df[col].apply(lambda x: None if type(x) == float \
-                                                   else unidecode(x))
+            df[col] = df[col].apply(lambda x: None if type(x) == float
+                                    else unidecode(x))
 
         # And convert 'float' columns:
         df[col] = pd.to_numeric(df[col], errors='ignore')
@@ -140,6 +141,7 @@ def get_dfs():
     dfs = df.copy()
 
     return dfs
+
 
 def get_dfs_train():
     data_file = os.path.join(os.pardir, 'Data', 'beer_data_train.pkl')
@@ -164,7 +166,7 @@ def feature_select(dfs):
     dfs.dropna(axis=0, inplace=True)
 
     dfs['isOrganic'] = dfs['isOrganic'].apply(lambda x: True if x == 'Y'
-                                                             else False)
+                                              else False)
 
     dfs = dfs[COLUMNS].copy()
 
@@ -186,6 +188,7 @@ def normalize(dfs, normalizer=None):
     dfs_norm = pd.DataFrame(norm_data, index=index, columns=columns)
 
     return dfs_norm, ss
+
 
 def vectorize(dfs, vectorizer=None):
 
@@ -219,16 +222,18 @@ def vectorize(dfs, vectorizer=None):
 def first_letter(cell):
     return str(cell[0]).lower()
 
+
 def get_beer_names():
-    #makes sorted list of all the beers
+    # makes sorted list of all the beers
     beer_file = "beer_data_full.pkl"
     beer_path = os.path.join(os.pardir, 'Data', beer_file)
-    beer_df =  pd.read_pickle(beer_path)
+    beer_df = pd.read_pickle(beer_path)
     beer_df = feature_select(beer_df)
     beer_df.sort_values('name', inplace=True)
     names_and_ids = beer_df[['name', 'id']]
 #    names_and_ids = list(names_and_ids.values)
     return names_and_ids.values
+
 
 def group_by_letter(names):
     alphabet = range(97, 123)

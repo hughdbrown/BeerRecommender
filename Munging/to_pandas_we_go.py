@@ -4,22 +4,25 @@ import pymongo
 
 
 def get_pickle(filepath):
-    #Get data from pickled file
+    # Get data from pickled file
     data = pickle.load(open(filepath))
     subsetted_data = []
     for d in data:
         try:
-            d_subset = {'name' : d['name'], 'style': d['style']['shortName'],
-            'abv': d['abv'], 'ibu': d['ibu'], 'finalGravity': d['style']['fgMax']}
+            d_subset = {'name': d['name'], 'style': d['style']['shortName'],
+                        'abv': d['abv'], 'ibu': d['ibu'], 'finalGravity': d['style']['fgMax']}
             subsetted_data.append(d_subset)
         except:
             pass
     return subsetted_data
 
+
 def to_pandas_we_go(data):
-    df = pd.DataFrame(data).loc[: , ['name', 'style', 'abv', 'finalGravity', 'ibu']]
+    df = pd.DataFrame(data).loc[
+        :, ['name', 'style', 'abv', 'finalGravity', 'ibu']]
     print "Sample of Beer DataFrame \n", df.head(), '\n\n'
     return df
+
 
 def format_df(df):
     df['abv'] = pd.to_numeric(df['abv'])

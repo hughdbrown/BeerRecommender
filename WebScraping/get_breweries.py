@@ -57,7 +57,7 @@ if COLLECTION_NAME in cols:
     sys.exit()
     # Drop and start over? Or do nothing?
     #beerco = beerdb[COLLECTION_NAME]
-    #beerco.drop()
+    # beerco.drop()
 
 # Global Craft Beer Collection:
 beer_co = beerdb[COLLECTION_NAME]
@@ -71,14 +71,14 @@ def insert_brewery_json():
         OUTPUT: None
     '''
 
-    #loop through each beer in the MongoDB craft_beers collection
-    beer_ids_list = list(beerdb.craft_beers.find({"id":{"$exists": "true"}}, {"id":1, "_id":0}))
+    # loop through each beer in the MongoDB craft_beers collection
+    beer_ids_list = list(beerdb.craft_beers.find(
+        {"id": {"$exists": "true"}}, {"id": 1, "_id": 0}))
     beer_ids = [id.values() for id in beer_ids_list]
 
-
-
     for beer_id in beer_ids:
-        query_url = 'http://api.brewerydb.com/v2/beer/{}/breweries?key={}'.format(beer_id[0],api_key)
+        query_url = 'http://api.brewerydb.com/v2/beer/{}/breweries?key={}'.format(beer_id[
+                                                                                  0], api_key)
         query = Request(query_url)
         f = urlopen(query)
         brewery_str = f.read()
@@ -87,9 +87,6 @@ def insert_brewery_json():
         beer_co.insert_one(json.loads(brewery_str))
 
 
-
-
-
 if __name__ == "__main__":
-    #This takes ~2 hours to run
+    # This takes ~2 hours to run
     insert_brewery_json()

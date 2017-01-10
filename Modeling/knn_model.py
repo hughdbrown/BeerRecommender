@@ -52,9 +52,10 @@ def get_data():
 
     return dfs, dfs_train, normalizer, tfidf_vec
 
-def train_knn(dfs, dfs_train, neighbors = 6 ):
-    #INPUT: neighbors (number of neighbors, int), dfs_train (first output of get_data function)
-    #OUPUT: knn (trained model)
+
+def train_knn(dfs, dfs_train, neighbors=6):
+    # INPUT: neighbors (number of neighbors, int), dfs_train (first output of get_data function)
+    # OUPUT: knn (trained model)
 
     knn = NearestNeighbors(n_neighbors=6, algorithm='brute').fit(dfs_train)
     #dfs_train = pd.concat([dfs_train, dfs.id], axis=1)
@@ -83,7 +84,7 @@ def train_knn(dfs, dfs_train, neighbors = 6 ):
 
     # Another point test:
     pt_idx = np.random.randint(len(dfs))
-    query_pt_pd = dfs.iloc[pt_idx:pt_idx+1].copy()
+    query_pt_pd = dfs.iloc[pt_idx:pt_idx + 1].copy()
 
     del query_pt_pd['id']
     query_pt_pd, _ = vectorize(query_pt_pd, vectorizer=tfidf_vec)
@@ -99,13 +100,14 @@ def train_knn(dfs, dfs_train, neighbors = 6 ):
     nns = dfs.iloc[ind[0]][1:]
 
     for i, r in enumerate(nns.iterrows()):
-        print str(i+1) + ": " + r[1]['name'] + " (" + r[1]['style_name'] + ")"
+        print str(i + 1) + ": " + r[1]['name'] + " (" + r[1]['style_name'] + ")"
 
     return knn
 
+
 def save_model(dfs_train, knn, normalizer, tfidf_vec):
-    #INPUT: output of get_data and train_knn functions
-    #OUTPUT: None. Saves model and data to "Data" folder
+    # INPUT: output of get_data and train_knn functions
+    # OUTPUT: None. Saves model and data to "Data" folder
 
     data_file = os.path.join(os.pardir, 'Data', 'beer_data_train.pkl')
     model_file = os.path.join(os.pardir, 'Data', 'knn_model.pkl')

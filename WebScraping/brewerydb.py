@@ -14,6 +14,7 @@ single_param_endpoints = ["beer", "brewery", "category", "event",
                           "feature", "glass", "guild", "ingredient",
                           "location", "socialsite", "style", "menu"]
 
+
 class BreweryDb:
 
     @staticmethod
@@ -32,7 +33,7 @@ class BreweryDb:
 
     @staticmethod
     def _get(request, options):
-        options.update({"key" : BreweryDb.API_KEY})
+        options.update({"key": BreweryDb.API_KEY})
         return requests.get(BreweryDb.BASE_URI + request, params=options).json()
 
     @staticmethod

@@ -66,6 +66,7 @@ app.config.from_object(__name__)
 def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
 
+
 @app.route('/display_beer', methods=['GET', 'POST'])
 def display_beer():
 
@@ -135,7 +136,7 @@ def df_to_html(dfs, limit=10):
     for r in dfs.iterrows():
         html += "<p>"
         html += "<h4>"
-        html += unicode(entries+1) + ".  "
+        html += unicode(entries + 1) + ".  "
         html += unicode(r[1]['name'])
         html += " (" + unicode(r[1]['style_name']) + ")"
         html += "</h4>"
@@ -195,7 +196,7 @@ def load_template_data_point():
         # Fill via random sample
         DFS_ONE[col] = DFS[col].sample(1).iloc[0]
 
-        DFS_ONE.loc[:,col] = DFS_ONE[col].astype(DFS[col].dtype)
+        DFS_ONE.loc[:, col] = DFS_ONE[col].astype(DFS[col].dtype)
 
         if DFS_ONE[col].dtype == float \
            or DFS_ONE[col].dtype == int \

@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
     # ensure the same types:
     for col in dfs_point:
-        dfs_point.loc[:,col] = dfs_point[col].astype(dfs_train[col].dtype)
+        dfs_point.loc[:, col] = dfs_point[col].astype(dfs_train[col].dtype)
 
     ##############
     # Load Model
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     for i, l in enumerate(labels):
         entry = sf[sf['id'] == l][0]
         print str(i) + ": " + entry['name'] + " (" + entry['style_name'] + ")"
-        
+
 ###############
 # End of File
 ###############

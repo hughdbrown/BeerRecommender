@@ -63,7 +63,7 @@ if COLLECTION_NAME in cols:
     sys.exit()
     # Drop and start over? Or do nothing?
     #beerco = beerdb[COLLECTION_NAME]
-    #beerco.drop()
+    # beerco.drop()
 
 # Global Craft Beer Collection:
 beer_co = beerdb[COLLECTION_NAME]
@@ -145,7 +145,7 @@ def get_beer(abv_pages):
     # Add one multi-threaded process for each ABV
     multi_proc = [pool.apply_async(insert_pages_json_threaded,
                                    (query_url.format(api_key, abv, "{}"),
-                                    pages,)) \
+                                    pages,))
                   for abv, pages in abv_pages.iteritems()]
 
     for proc in multi_proc:

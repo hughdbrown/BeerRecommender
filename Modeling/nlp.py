@@ -25,13 +25,14 @@ from sklearn.decomposition import NMF
 PARSER = English()
 STOP_WORDS = set(stopwords.words('english') + list(ENGLISH_STOP_WORDS))
 PUNCT_TBL = dict.fromkeys(i for i in xrange(sys.maxunicode)
-                        if unicodedata.category(unichr(i)).startswith('P'))
+                          if unicodedata.category(unichr(i)).startswith('P'))
 
 
 def get_dataframe(filepath):
-    #Load data
+    # Load data
     data = pickle.load(open(filepath))
     return data
+
 
 def print_top_words(model_components, feature_names, n_top_words=5):
     for topic_idx, topic in enumerate(model_components):
@@ -39,6 +40,7 @@ def print_top_words(model_components, feature_names, n_top_words=5):
         print "Topic #{}:".format(topic_idx)
         print " | ".join([feature_names[t] for t in topic_top_words])
         print '\n'
+
 
 def tokenizer(doc):
     ''' SpaCy custom tokenizer.
@@ -100,7 +102,7 @@ def nmf_descriptions(df):
 
 if __name__ == "__main__":
 
-#    df = get_dataframe('../Data/beer_data_final.pkl')
+    #    df = get_dataframe('../Data/beer_data_final.pkl')
     df = get_dataframe('../Data/beer_data_full.pkl')
 
     for col in df:
@@ -114,5 +116,3 @@ if __name__ == "__main__":
     model_components, feature_names = nmf_descriptions(df)
 
     print_top_words(model_components, feature_names, n_top_words=8)
-
-
